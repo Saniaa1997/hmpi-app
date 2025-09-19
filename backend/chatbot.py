@@ -58,11 +58,13 @@ def get_chatbot_response(api_key: str, query: str):
     
     try:
         genai.configure(api_key=api_key)
-        model = genai.GenerativeModel('gemini-pro')
+       # NEW, FASTER LINE
+        model = genai.GenerativeModel('gemini-1.5-flash-latest')
         
         prompt = get_project_context() + f"\nBased on the context above, answer the following user question:\nUser Question: {query}\n\nAnswer:"
         
         response = model.generate_content(prompt)
         return response.text
     except Exception as e:
+
         return f"An error occurred with the API: {e}. Please check your API key and network connection."
