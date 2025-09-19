@@ -207,7 +207,7 @@ elif page == "🔑 Admin":
         if st.button("Login"):
             if password == ADMIN_PASSWORD:
                 st.session_state['authenticated'] = True
-                st.experimental_rerun()
+                st.rerun()
             else:
                 st.error("The password you entered is incorrect.")
     
@@ -229,4 +229,5 @@ elif page == "🔑 Admin":
         
         if st.button("Logout"):
             st.session_state['authenticated'] = False
+
             st.rerun()
