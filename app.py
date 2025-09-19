@@ -131,6 +131,32 @@ if page == "📈 Analysis":
             st.success("🎉 Calculation Complete!")
     
     if "last_results" in st.session_state:
+        # --- START: Summary Dashboard Code ---
+        st.subheader("Analysis Summary")
+        results_df = st.session_state["last_results"]
+        
+        # Calculate counts (we'll define 'polluted' as HMPI >= 100)
+        polluted_count = len(results_df[results_df['HMPI'] >= 100])
+        safe_count = len(results_df) - polluted_count
+
+        # Display in styled columns
+        col1, col2 = st.columns(2)
+        
+        col1.markdown(f"""
+        <div style="background-color: #28a745; padding: 20px; border-radius: 10px; text-align: center; color: white;">
+            <h3 style="color: white;">💧 Safe Samples</h3>
+            <h1 style="color: white; font-size: 2.5em;">{safe_count}</h1>
+        </div>
+        """, unsafe_allow_html=True)
+
+        col2.markdown(f"""
+        <div style="background-color: #dc3545; padding: 20px; border-radius: 10px; text-align: center; color: white;">
+            <h3 style="color: white;">☣️ Polluted Samples</h3>
+            <h1 style="color: white; font-size: 2.5em;">{polluted_count}</h1>
+        </div>
+        """, unsafe_allow_html=True)
+        st.markdown("<br>", unsafe_allow_html=True) # Add some space
+        # --- END: Summary Dashboard Code ---
         st.subheader("Analysis Results")
         st.dataframe(st.session_state["last_results"])
 
@@ -231,3 +257,4 @@ elif page == "🔑 Admin":
             st.session_state['authenticated'] = False
 
             st.rerun()
+
